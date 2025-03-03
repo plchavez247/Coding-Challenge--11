@@ -38,7 +38,7 @@ class Borrower{
     
 
     returnBook(book){
-        this.borrowedBooks = this.borrowedBooks.filter(a => a !== book);//creates new array without specified book
+        this.borrowedBooks = this.borrowedBooks.filter(b => b !== book);//creates new array without specified book
      
     };
 };
@@ -69,8 +69,22 @@ class Library {
             console.log(book.getDetails());
         })
     }
+    lendBook(borrowerId, isbn){
+        let borrower = this.borrowers.find(b => b.borrowerId === borrowerId)
+        let book = this.books.find(b=> b.isbn === isbn);
+        if (!borrower) return;
+        if(!book || book.copies <= 0) return;
+        book.updateCopies(-1);
+        borrower.borrowBook(book.title);
+};
 };
 
 const library = new Library();
 library.addBook(book1);
 library.listBooks();
+library.borrowers.push(borrower1);// Add to library before lending a book
+
+//Task 4: Implementing Book Borrowing
+library.lendBook(201, 123456);
+console.log(book1.getDetails());
+console.log(borrower1.borrowedBooks);
