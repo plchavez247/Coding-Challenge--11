@@ -77,6 +77,14 @@ class Library {
         book.updateCopies(-1);
         borrower.borrowBook(book.title);
 };
+    returnBook(borrowerId, isbn){
+        let borrower = this.borrowers.find(b=> b.borrowerId === borrowerId);
+        let book = this.books.find(b => b.isbn === isbn);
+        if (!borrower) return;
+        if (!book) return;
+        book.updateCopies(1)
+        borrower.returnBook(book.title);
+    }
 };
 
 const library = new Library();
@@ -86,5 +94,10 @@ library.borrowers.push(borrower1);// Add to library before lending a book
 
 //Task 4: Implementing Book Borrowing
 library.lendBook(201, 123456);
+console.log(book1.getDetails());
+console.log(borrower1.borrowedBooks);
+
+//Task 5: Implementing Book Returns
+library.returnBook(201, 123456);
 console.log(book1.getDetails());
 console.log(borrower1.borrowedBooks);
